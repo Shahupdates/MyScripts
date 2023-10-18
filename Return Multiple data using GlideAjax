@@ -1,0 +1,57 @@
+OnChange Client script:--
+
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (newValue === '') {
+      g_form.setValue('u_user_manager','');
+	  g_form.setValue('short_description','');
+	   return;
+   }
+
+	var caller_mgr = new GlideAjax('User_Details');
+	caller_mgr.addParam('sysparm_name','getdet');
+	caller_mgr.addParam('sysparm_user',newValue);
+	caller_mgr.getXML(CallBack);
+	
+	function CallBack(response){
+		
+		var getXML = response.responseXML.documentElement.getAttribute("answer");
+		
+		var retobj = JSON.parse(getXML);
+		
+		g_form.setValue('u_user_manager',retobj.user_manager);
+	    g_form.setValue('short_description',retobj.user_department);
+						
+	}
+	
+	
+   //Type appropriate comment here, and begin script below
+   
+}
+   
+   
+   Script Includes :-
+   
+   var User_Details = Class.create();
+User_Details.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+	getdet : function(){
+		
+		var userid = this.getParameter('sysparm_user');
+		
+		var ga = new GlideRecord('sys_user');
+		if(ga.get(userid)){
+		
+		var userObj = {
+			
+			
+			"user_manager": ga.getValue("manager"),
+			"user_department":ga.getDisplayValue("department"),
+			
+		};
+	
+			return JSON.stringify(userObj);
+	}
+	},
+	
+    type: 'User_Details'
+});

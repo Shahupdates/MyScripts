@@ -1,0 +1,196 @@
+
+https://gist.github.com/cmcdevitt/28e7468a225c0e52bfdb6123ebc33650
+
+https://community.servicenow.com/community?id=community_blog&sys_id=7a6d2e29dbd0dbc01dcaf3231f961962
+
+https://developer.servicenow.com/dev.do#!/learn/courses/paris/app_store_learnv2_angularjs_london_building_apps_with_angularjs/app_store_learnv2_angularjs_london_introduction_to_angularjs_in_servicenow/app_store_learnv2_angularjs_london_introduction_to_angularjs_apps_in_servicenow_objectives
+
+https://community.servicenow.com/community?id=community_article&sys_id=b94d2229dbd0dbc01dcaf3231f961925
+
+https://community.servicenow.com/community?id=community_article&sys_id=b1fce2a5dbd0dbc01dcaf3231f9619ac
+
+https://community.servicenow.com/community?id=community_blog&sys_id=240af05ddb010cd44819fb24399619ca
+
+Keywords in Jelly in left hand :-
+
+Attributes in the right hand side
+
+if --> test
+
+set --> var , value
+
+while --> test
+
+set_if --> var = <test> ? <if_true> : <if_false>
+
+<g:macro invoke >
+
+when --> test
+
+
+
+
+1 ) Looping through the Jelly Scripts :- 
+
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	
+	Hello World
+	
+	<g:evaluate> //This is only for the ServiceNow Code under g:evaluate and others j:evaluate jelly
+		var words = ["Propose","Promote","Reject","Demote"];
+	</g:evaluate>
+		
+		<j:forEach var="jvar_state" items="${words}">  //JEXL {words}
+			<p>${jvar_state}</p>
+	</j:forEach>
+</j:jelly>
+
+O/P:- 
+
+Hello World
+Propose
+
+Promote
+
+Reject
+
+Demote
+
+
+
+2) Learning test
+
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	
+	<g:evaluate> 
+		var words = ["Abhi","Parhi","Kunu"];
+	</g:evaluate>
+		
+		<j:forEach var="jvar_name" items="${words}">  
+			<p>${jvar_name}</p>
+	</j:forEach>
+</j:jelly>
+
+
+
+3)<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	
+	<g:evaluate>
+		var arrayName = ["Abhi","Parhi","Bhadrak"]
+	</g:evaluate>
+	
+	<j:forEach var="jvar_val" items="${arrayName}" >
+			   <p>${jvar_val}</p>
+	</j:forEach>
+</j:jelly>
+
+
+
+
+4) <j:set var="jvar_variable" value="45" />   //assigning value to jvar
+	
+	<j:if test= "${jvar_variable ne 5}">  //test returns true.
+		  Count is less than 5
+	</j:if>		
+	
+
+
+
+5)<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	
+	<j:set var="jvar_variable" value="1" />
+	
+	
+	<j:if test="${jvar_variable ne 67}">
+		<p>This is not equal to 67 value</p>	
+	</j:if>
+	
+	
+	<j:if test="${jvar_variable == 67}">
+		<p>This is a equal to 67 value</p>
+	</j:if>	
+	
+	<j:if test="${jvar_variable le 67}">
+		<p> This is a less than 67 value</p>
+	</j:if>	
+	
+	<p>Value is </p>
+	
+	<j:while test="${jvar_variable le 99}">
+		<p>${jvar_variable}</p>
+		<j:set var="jvar_variable" value="${jvar_variable+1}" />
+	</j:while>	
+	
+</j:jelly>	
+
+
+
+6) while loop
+
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+	<g:evaluate>
+		
+	var a=10;
+	
+	</g:evaluate>
+	
+	<j:while test="${a!=50}">
+		
+		<p> a = ${a} </p>
+		
+		<g:evaluate>a++</g:evaluate>
+		
+	</j:while>
+	
+	
+</j:jelly>
+
+
+
+7)<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+	<g:evaluate>
+		
+	var a = new GlideRecord('incident');
+	a.query();
+	
+	</g:evaluate>
+	
+	<j:while test="${a.next()}">
+		
+		<p> number = ${a.number} </p>
+		
+	</j:while>
+	
+	
+</j:jelly>
+
+8)<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+	<g:evaluate>
+		
+	var a = new GlideRecord('incident');
+	a.query();
+	
+	</g:evaluate>
+	
+	<j:while test="${a.next()}">
+		
+		<table width="50%" border="1">
+			<tr>
+				<td>${a.number} </td>
+				<td>${a.short_description} </td>
+			</tr>
+		</table>
+		
+	</j:while>
+	
+</j:jelly>

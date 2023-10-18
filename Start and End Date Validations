@@ -1,0 +1,54 @@
+Client script :-
+
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (isLoading || newValue === '') {
+      return;
+   }
+g_form.hideFieldMsg('u_end_problem_date');
+	
+var ga = new GlideAjax('BlackoutDateValid');
+
+ga.addParam('sysparm_name', 'EndDate');
+
+
+ga.addParam('sysparm_startDate', g_form.getValue('u_start_problem_date'));
+
+
+ga.addParam('sysparm_endDate',newValue);
+
+
+ga.getXML(validateEndDate);
+	
+}
+
+function validateEndDate(response){
+	
+var responsefromXML = response.responseXML.documentElement.getAttribute("answer");
+
+if(responsefromXML == 1){
+g_form.clearValue('u_end_problem_date');			
+g_form.showFieldMsg('u_end_problem_date','End Date should be greater or equal to  Start Date','error');
+
+}
+
+}
+
+
+Script Include:-
+
+EndDate : function(){
+
+
+var _startDate = new GlideDateTime(this.getParameter('sysparm_startDate'));
+
+
+var _endDate = new GlideDateTime(this.getParameter('sysparm_endDate'));
+
+
+return _startDate.compareTo(_endDate);
+
+
+},
+	
+
+   

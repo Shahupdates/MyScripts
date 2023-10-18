@@ -1,0 +1,58 @@
+On Insert Async BR on sys_attachment table.
+
+
+Condition : - gs.getSession().isInteractive()
+
+
+var attach_obj = new GlideRecord('u_replicate_incident');
+attach_obj.addQuery('sys_id',current.table_sys_id);
+attach_obj.query();
+
+if(attach_obj.next()){
+attach_obj.u_worknotes = "Inserted File Name " + current.file_name + " is attached by " + gs.getUserDisplayName();
+		attach_obj.update();
+	}
+
+
+
+On Update After BR on sys_attachment table.
+
+Filter Condition : - FileName Changes 
+
+Condition : - current.file_name!=previous.file_name
+
+var attach_obj = new GlideRecord('u_replicate_incident');
+	 attach_obj.addQuery('sys_id',current.table_sys_id);
+	 attach_obj.query();
+	
+	 if(attach_obj.next()){
+		 attach_obj.u_worknotes = "The file name " + previous.file_name + " has been renamed to " + current.file_name + " by " + gs.getUserDisplayName();
+		 attach_obj.update();
+	 }
+
+
+On Delete After BR on sys_attachment table.
+
+var attach_del = new GlideRecord('u_replicate_incident');
+	attach_del.addQuery('sys_id',current.table_sys_id);
+	attach_del.query();
+	
+	if(attach_del.next()){
+	  attach_del.u_worknotes = " The file " + current.file_name + " was deleted by " + gs.getUserDisplayName();
+	  attach_del.update();
+	}
+	
+	
+	
+	var fname = current.file_name;
+    var asysid = current.table_sys_id;
+    var tableName = current.table_name;
+    var usr;
+
+
+        var tas = new GlideRecord(tableName);
+        if (tas.get('sys_id', asysid)) {
+
+            tas.u_attachment_audit = "Deleted File Name: " + fname + " / By: " + gs.getUserDisplayName();
+            tas.update();
+        }

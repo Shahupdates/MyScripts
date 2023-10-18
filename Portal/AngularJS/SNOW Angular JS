@@ -1,0 +1,146 @@
+1 > ng-if
+
+<div>
+<!-- your widget template -->
+  <div>
+    <span ng-if="show()">Valid</span>
+  </div>
+  
+  
+</div>
+
+
+
+
+api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	
+	$scope.show=function(){
+		
+		var x = 10;
+		var y = 20;
+		
+		if(x<y)
+			return true;
+		else
+			return false;
+	}
+	
+};
+
+
+
+
+2 > ng - click
+
+<div>
+<!-- your widget template -->
+  
+    <button ng-click="sum()">Sum</button>
+  
+  </div>
+  
+  
+  
+  
+  
+  api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	
+	$scope.sum = function(){
+		var x = 20;
+		var y = 60;
+		alert(x+y);
+	}
+	
+};
+
+
+
+<div>
+<!-- your widget template -->
+  
+<span ng-if="data.coins == 0 || data.coins == undefined">
+             No Coins</span>
+
+<span ng-if="data.coins > 0">Number of Coins = {{data.coins}}</span>
+  
+  
+</div>
+
+
+(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+	data.coins = 10;
+	
+})();
+
+
+api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	
+	$scope.coins = -51;
+};
+
+
+3 > ng-repeat
+
+
+
+<div>
+<!-- your widget template -->
+  
+<span ng-repeat="item in data.items">{{item}}<br></span>
+</div>
+
+
+
+(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+	data.items = ["food","beverage","biriyani"];
+	
+})();
+
+
+api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	
+	$scope.items = ["food","beverage","biriyanire"];
+};
+
+
+
+4 > ng-model and ng-bind
+
+<div>
+<!-- your widget template -->
+  
+  <textarea ng-model="amount"></textarea>
+  <span>Amount = {{amount}}</span>
+  
+</div>
+
+api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	
+	$scope.amount = 1000;
+};
+
+
+(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+	data.items = ["food","beverage","biriyani"];
+	
+})();
+

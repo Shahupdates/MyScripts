@@ -1,0 +1,27 @@
+Define a display BR :-
+
+Advanced view script:-
+
+g_scratchpad.oldImpact=current.getValue('impact');
+g_scratchpad.oldUrgency=current.getValue('urgency');
+g_scratchpad.oldUrgency=current.getValue('priority');
+
+onChange client script on Impact and Urgency fields(2 client script):-
+
+if (isLoading || newValue === '') {
+      return;
+   }
+	
+	var userRole=g_user.hasRole('admin');
+	var imp=g_form.getValue('impact');
+	if(!userRole){
+		if(newValue == 1 && imp==1){
+			g_form.setValue('impact',g_scratchpad.impact);
+			g_form.setValue('urgency',g_scratchpad.urgency);
+			g_form.setValue('priority',g_scratchpad.priority);
+			g_form.addErrorMessage('Invalid Update');
+		}
+	}
+
+
+Adjust values accordingly for impact field.

@@ -1,0 +1,142 @@
+var obj = {"firstName":"Ashutosh", "lastName":"Munot"};
+
+var str = JSON.stringify(obj);
+
+var parser = new JSONParser();
+
+var result = parser.parse(str);
+
+gs.print(‘First Name Attribute : ’+result.firstName);
+
+gs.print(obj.firstName);
+
+
+
+var user = {"name":"Abhi", "title":"Parhi"}
+
+gs.print(user);
+gs.print(JSON.stringify(user));
+
+var user = '{"name":"Abhi", "title":"Parhi"}'
+
+gs.print(user);
+gs.print(JSON.parse(user));
+
+
+*** Script: [object Object]
+*** Script: {"name":"Abhi","title":"Parhi"}
+*** Script: {"name":"Abhi", "title":"Parhi"}
+*** Script: [object Object]
+
+
+
+
+var jsonvar = {};
+
+var ga = new GlideRecord("sys_user");
+ga.addQuery('sys_id',gs.getUserID());
+ga.query();
+
+if(ga.next()){
+
+jsonvar['name'] = ga.name.toString();
+jsonvar['title'] = ga.title.toString();
+jsonvar['active'] = ga.active.toString();
+
+}
+
+gs.print(JSON.stringify(jsonvar));
+
+
+
+O/P : - *** Script: {"name":"System Administrator","title":"System Administrator","active":"true"}
+
+
+
+var userObj = {};
+var userArr = [];
+
+var ga = new GlideRecord("incident");
+ga.addQuery("state",9);
+ga.query();
+
+while(ga.next()){
+
+var userObj = {};
+
+userObj['number'] = ga.getValue('number');
+userObj['caller'] = ga.getDisplayValue('caller_id');
+userObj['shortdescription'] = ga.getValue('short_description');
+userObj['description'] = ga.getValue('description');
+
+userArr.push(JSON.stringify(userObj));  //for pretty json use userArr.push(JSON.stringify(userObj , null , 4));
+
+}
+
+for(var i in userArr)
+gs.print(userArr[i]);
+
+
+O/P : -   *** Script:
+
+{"number":"INC0010014","caller":"Aqib Mushtaq","shortdescription":"test","description":"testtttt22"}
+*** Script: {"number":"INC0010019","caller":"Aqib Mushtaq","shortdescription":"test","description":"testtttt22"}
+*** Script: {"number":"INC0010016","caller":"Aqib Mushtaq","shortdescription":"test","description":"testtttt22"}
+*** Script: {"number":"INC0010017","caller":"Aqib Mushtaq","shortdescription":"test","description":"testtttt22"}
+*** Script: {"number":"INC0010018","caller":"Aqib Mushtaq","shortdescription":"test","description":"testtttt22"}
+*** Script: {"number":"INC0010020","caller":"Manifah Masood","shortdescription":"test","description":"testtttt22"}
+*** Script: {"number":"INC0010015","caller":"Aqib Mushtaq","shortdescription":"test","description":"testtttt22"}
+*** Script: {"number":"INC0010013","caller":"Aqib Mushtaq","shortdescription":"test","description":"testtttt22"}
+*** Script: {"number":"INC0010012","caller":"Aqib Mushtaq","shortdescription":"test","description":"testtttt22"}
+
+for complete json value only use gs.print(userArr,null,4);
+
+[0:00:00.045] Script completed in scope global: script
+Script execution history and recovery available here
+*** Script: {
+    "number": "INC0010014",
+    "caller": "Aqib Mushtaq",
+    "shortdescription": "test",
+    "description": "testtttt22"
+},{
+    "number": "INC0010019",
+    "caller": "Aqib Mushtaq",
+    "shortdescription": "test",
+    "description": "testtttt22"
+},{
+    "number": "INC0010016",
+    "caller": "Aqib Mushtaq",
+    "shortdescription": "test",
+    "description": "testtttt22"
+},{
+    "number": "INC0010017",
+    "caller": "Aqib Mushtaq",
+    "shortdescription": "test",
+    "description": "testtttt22"
+},{
+    "number": "INC0010018",
+    "caller": "Aqib Mushtaq",
+    "shortdescription": "test",
+    "description": "testtttt22"
+},{
+    "number": "INC0010020",
+    "caller": "Manifah Masood",
+    "shortdescription": "test",
+    "description": "testtttt22"
+},{
+    "number": "INC0010015",
+    "caller": "Aqib Mushtaq",
+    "shortdescription": "test",
+    "description": "testtttt22"
+},{
+    "number": "INC0010013",
+    "caller": "Aqib Mushtaq",
+    "shortdescription": "test",
+    "description": "testtttt22"
+},{
+    "number": "INC0010012",
+    "caller": "Aqib Mushtaq",
+    "shortdescription": "test",
+    "description": "testtttt22"
+}
+

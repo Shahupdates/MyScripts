@@ -1,0 +1,142 @@
+
+HTML Template : - 
+
+<div>
+<!-- your widget template -->
+  Hello 
+  <br>{{c.name}}<br/> 
+  <button ng-click="c.alert()">
+    Alert
+  </button>
+<br/>
+  <button ng-click="msg()">
+    Second Alert
+  </button><br/>
+  
+  <p ng-if="i">
+    TRUE 
+  </p>
+  
+  <li ng-repeat="val in c.arr">
+    {{val}}
+  </li><br/>
+  
+  <textarea ng-bind="value"></textarea>{{value}}
+
+  <textarea ng-model="value"></textarea><br/>
+  
+  {{data.s}}  
+  
+  <li ng-repeat="val in data.arr">
+   {{val}}</li>
+  
+  
+  <table border="2px">
+    <tr><th>ID</th>
+        <th>Short Description</th>
+        <th>Description</th>
+    </tr>
+   <tr ng-repeat="col in data.inc">
+    <td>{{col.id}}</td>
+    <td>{{col.vrty}}</td>
+    <td>{{col.gate}}</td>
+   </tr>
+  </table>  
+</div>
+
+
+
+
+
+
+Client Script : - 
+
+api.controller=function($scope) {
+  /* widget controller */
+  var c = this;
+	c.name = "Abhi"
+	c.alert = function(){
+		alert("My first Alert");
+	}
+	$scope.msg = function(){
+		alert("My second alert");
+	}
+	
+	$scope.i = false;
+	
+	c.arr = [12,34,224,55,33];
+	
+	$scope.value = "ServiceNow";
+};
+
+
+
+
+Server side
+
+(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+	
+	data.s = "true";
+	data.arr=[34,78,90,74,23];
+	
+	data.inc = [];
+	var inc = new GlideRecord('u_godown_details');
+	inc.addEncodedQuery('u_variety=food');
+	inc.query();
+	
+	while(inc.next()){
+		
+		var incint = {};
+		incint.id = inc.getValue('u_id');
+		incint.vrty = inc.getValue('u_variety');
+		incint.gate = inc.getValue('u_gate_time');
+		data.inc.push(incint);
+	}
+})();
+
+
+CSS : - 
+
+th{
+  text-align:center;
+}
+
+
+td{
+  text-align:center;
+}
+
+
+
+Preview : - 
+
+Skip to page content
+Preview
+Hello
+Abhi
+Alert
+Second Alert
+12
+34
+224
+55
+33
+
+ServiceNow
+ServiceNow 
+ServiceNow
+
+true
+34
+78
+90
+74
+23
+ID	Short Description	Description
+GDET0001051	food	2021-10-06 18:13:36
+GDET0001065	food	
+GDET0001057	food	2021-10-05 18:35:22
+
